@@ -81,7 +81,9 @@ exports.handler = async (event, context) => {
     console.log(`config code: ${config_key}${config_version}`)
     
     // 2. DynamoDB Update
-    
+    // 2.1 license key가 없는 경우 새로 생성
+    // 2.2 license key가 있는 경우 업데이트
+
     // 3. Save at S3
 
 	// 4. response to api gateway
