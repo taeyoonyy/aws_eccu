@@ -3,6 +3,11 @@ const AWS = require('aws-sdk');
 const documentClient = new AWS.DynamoDB.DocumentClient({  region: 'ap-northeast-2'});
 const tableName = 'ECCU_TEST_DYNAMO'
 
+/**
+ * configuration key를 생성한다
+ * 영문 대문자 3글자
+ * @returns {string} configuration key 
+ */
 function random_config_key() {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -14,6 +19,11 @@ function random_config_key() {
    return result;
 }
 
+/**
+ * DynamoDB에 등록된 configuration을 확인하여 중복되지 않는 configuration key를 생성한다.
+ * 영문 대문자 3글자
+ * @returns {string} configuration key 
+ */
 async function make_config_key() {
     const check_license_params = {
         TableName: tableName
@@ -43,9 +53,11 @@ async function make_config_key() {
     return config_key
 }
 
+/**
+ * Lambda 함수 핸들러
+ * @returns {object} 미정
+ */
 exports.handler = async (event, context) => {
-    
-    
     let check_license_params = {
         TableName: tableName,
         Key: {
@@ -72,7 +84,7 @@ exports.handler = async (event, context) => {
     
     // 3. Save at S3
 
-		// 4. response to api gateway
+	// 4. response to api gateway
     const response = {
         statusCode: 200,
         // body: JSON.stringify('Hello from Lambda!'),
